@@ -1,0 +1,10 @@
+services:
+  database:
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: passShoppE
+      POSTGRES_USER: shoppe
+      POSTGRES_DB: dbShopee
+    ports:
+      - "5432:5432"
+    
