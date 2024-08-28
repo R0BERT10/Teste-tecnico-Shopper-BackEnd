@@ -1,8 +1,8 @@
 import { MeasureTypes } from "../../@types/EnumMeasureTypes"
 import Measure from "../../entities/Measure"
 import IMeasureRepository from "../../repositories/IMeasureRepository"
-import { Result } from "../../util/ResultClassHandle"
-import { ServerError } from "../../util/ResultErrors"
+import Result from "../../util/ResultClassHandle"
+import { ServerError } from "../../util/ResultServerErrors"
 
 type Data = {
     image: string,
@@ -21,9 +21,9 @@ export default class UploadMeasuresService {
 
 
             const measure = new Measure()
-            measure.customerCode = data.customer_code
-            measure.measureTime = data.measure_datetime
-            measure.measureType = data.measure_type
+            measure.customer_code = data.customer_code
+            measure.measure_datetime = data.measure_datetime
+            measure.measure_type = data.measure_type
             return await this.repository.create(measure)
         } catch (error) {
             const err = error as Error

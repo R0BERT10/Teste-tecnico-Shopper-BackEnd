@@ -1,8 +1,8 @@
 import IMeasureRepository from "../../repositories/IMeasureRepository"
 import MeasureRepositoryPostgres from "../../repositories/implementations/MeasureRepositoryPostgres"
-import ConfirmMeasuresService from "./confirmMeasuresService"
-import ListMeasuresService from "./listMeasuresService"
-import UploadMeasuresService from "./uploadMeasuresService"
+import ConfirmMeasuresService from "./ConfirmMeasuresService"
+import ListMeasuresService from "./ListMeasuresService"
+import UploadMeasuresService from "./UploadMeasuresService"
 
 const repository: IMeasureRepository = new MeasureRepositoryPostgres()
 

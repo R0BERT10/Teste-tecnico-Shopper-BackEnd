@@ -1,7 +1,7 @@
 import MeasureServices from "../../services/MeasureServices"
-import ConfirmMeasureController from "./confirmMeasureController"
-import ListMeasureController from "./listMeasureController"
-import UploadMeasureController from "./uploadMeasureController"
+import ConfirmMeasureController from "./ConfirmMeasureController"
+import ListMeasureController from "./ListMeasureController"
+import UploadMeasureController from "./UploadMeasureController"
 
 const measureServices = MeasureServices()
 

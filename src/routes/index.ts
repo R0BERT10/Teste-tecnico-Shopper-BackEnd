@@ -10,5 +10,4 @@ measureRouter.get("/:customerCode/list", measureControllers.Get.handle)
 measureRouter.post("/upload", measureControllers.Post.handle);
 measureRouter.patch("/confirm", measureControllers.Patch.handle);
 
-
 export default measureRouter

@@ -1,6 +1,11 @@
-import { ResultError } from "./ResultErrors";
+export type ResultError = {
+  httpCodeResponse: number
+  codeErrorResponse: string
+  messageErrorResponse: string
+  functionOriginError: string
+}
 
-export class Result<T> {
+export default class Result<T> {
   public isSuccess: boolean
   public isFailure: boolean
   public error?: ResultError

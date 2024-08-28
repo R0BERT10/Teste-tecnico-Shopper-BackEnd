@@ -2,7 +2,7 @@ import "reflect-metadata";
 import "dotenv/config";
 import { DataSource } from "typeorm";
 import { CreateMeasuresTable1724783406481 } from "./migrations/1724783406481-CreateMeasuresTable";
-import DbMeasure from "./EntitieDbMeasure";
+import Measure from "../entities/Measure";
 
 
 export const AppDataSource = new DataSource({
@@ -14,8 +14,7 @@ export const AppDataSource = new DataSource({
   database: process.env.POSTGRES_DATABASE ?? "dbShopee",
   synchronize: true,
   logging: false,
-  entities: [DbMeasure],
+  entities: [Measure],
   migrations: [CreateMeasuresTable1724783406481],
-  subscribers: [],
-  ssl: true
+  subscribers: []
 });
