@@ -5,8 +5,8 @@ import Measure, { EssencialMeasure } from "../../entities/Measure";
 import IMeasureRepository from "../IMeasureRepository";
 import { getDateMonthByDate } from "../../util/getDateMonth";
 import Result from "../../util/ResultClassHandle";
-import { ClientError } from "../../util/ResultClientErrors";
-import { ServerError } from "../../util/ResultServerErrors";
+import ClientError from "../../util/ResultClientErrors";
+import ServerError from "../../util/ResultServerErrors";
 
 export default class MeasureRepositoryPostgres implements IMeasureRepository {
     private repository = AppDataSource.getRepository(Measure)

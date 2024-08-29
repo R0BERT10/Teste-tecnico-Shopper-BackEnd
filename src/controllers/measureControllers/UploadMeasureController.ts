@@ -5,7 +5,7 @@ import UploadMeasuresService from "../../services/MeasureServices/UploadMeasures
 import Measure from "../../entities/Measure";
 import { errorBodyResponse } from "../../util/ErrorBodyResponse";
 import Result from "../../util/ResultClassHandle";
-import { ClientError } from "../../util/ResultClientErrors";
+import ClientError from "../../util/ResultClientErrors";
 
 type InputData = {
     image: string,

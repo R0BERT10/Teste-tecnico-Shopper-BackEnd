@@ -10,7 +10,7 @@ enum ClientErrors {
     CONFIRMATION_DUPLICATE = "Leitura do mês já realizada"
 }
 
-export class ClientError implements ResultError {
+export default class ClientError implements ResultError {
     static readonly enum = ClientErrors
     //static readonly CONFLICT = (conflictMessage: string, origin: string) => { return new ClientError("CONFLICT", 409, conflictMessage, origin) }
 

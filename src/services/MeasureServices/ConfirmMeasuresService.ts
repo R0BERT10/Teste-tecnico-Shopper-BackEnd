@@ -1,6 +1,6 @@
 import IMeasureRepository from "../../repositories/IMeasureRepository"
 import Result from "../../util/ResultClassHandle"
-import { ServerError } from "../../util/ResultServerErrors"
+import ServerError from "../../util/ResultServerErrors"
 
 type Data = {
     measure_uuid: string,

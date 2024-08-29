@@ -5,7 +5,7 @@ import { errorBodyResponse } from "../../util/ErrorBodyResponse";
 import { MeasureTypes } from "../../@types/EnumMeasureTypes";
 import Measure from "../../entities/Measure";
 import Result from "../../util/ResultClassHandle";
-import { ClientError } from "../../util/ResultClientErrors";
+import ClientError from "../../util/ResultClientErrors";
 
 type InputData = {
     customerCode: string,

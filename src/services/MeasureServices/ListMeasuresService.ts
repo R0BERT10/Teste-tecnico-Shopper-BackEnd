@@ -2,7 +2,7 @@ import { MeasureTypes } from "../../@types/EnumMeasureTypes"
 import Measure from "../../entities/Measure"
 import IMeasureRepository from "../../repositories/IMeasureRepository"
 import Result from "../../util/ResultClassHandle"
-import { ServerError } from "../../util/ResultServerErrors"
+import ServerError from "../../util/ResultServerErrors"
 
 type Data = {
     customerCode: string,

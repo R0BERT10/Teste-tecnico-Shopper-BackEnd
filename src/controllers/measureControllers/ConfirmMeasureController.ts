@@ -3,7 +3,7 @@ import { TypesOfParamsReq } from "../../@types/TypesOfParamsRequest";
 import ConfirmMeasuresService from "../../services/MeasureServices/ConfirmMeasuresService";
 import { errorBodyResponse } from "../../util/ErrorBodyResponse";
 import Result from "../../util/ResultClassHandle";
-import { ClientError } from "../../util/ResultClientErrors";
+import ClientError from "../../util/ResultClientErrors";
 
 type InputData = {
     measure_uuid: string,
