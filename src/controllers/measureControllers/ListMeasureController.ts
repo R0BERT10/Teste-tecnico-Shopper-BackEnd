@@ -66,12 +66,15 @@ export default class ListMeasureController {
     private inputHandling(params: TypesOfParamsReq): Result<InputData> {
         const { routeParams, queryParams } = params
         const { customerCode } = routeParams
-        const measure_type = queryParams.measure_type
-
-        if (!(!measure_type || Object.values(MeasureTypes).includes(measure_type.toUpperCase()))) {
-            return Result.fail(
-                ClientError.INVALID_TYPE(`ListMeasureController: inputHandling(${params})`)
-            )
+        const measureTypeString = queryParams.measure_type
+        let measure_type: MeasureTypes | undefined
+        if (measureTypeString) {
+            if (!Object.values(MeasureTypes).includes(measureTypeString.toUpperCase())) {
+                return Result.fail(
+                    ClientError.INVALID_TYPE(`ListMeasureController: inputHandling(${params})`)
+                )
+            }
+            measure_type = MeasureTypes[measureTypeString as keyof typeof MeasureTypes]
         }
 
         return Result.ok({

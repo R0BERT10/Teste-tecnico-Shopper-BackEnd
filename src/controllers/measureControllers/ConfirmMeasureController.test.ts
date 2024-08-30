@@ -1,4 +1,4 @@
-import ConfirmMeasureController from "../../controllers/measureControllers/ConfirmMeasureController"
+import ConfirmMeasureController from "./ConfirmMeasureController"
 import Result from "../../util/ResultClassHandle";
 import ClientError from "../../util/ResultClientErrors";
 
@@ -47,7 +47,7 @@ describe("ConfirmMeasureController", () => {
             expect(res.status).toHaveBeenCalledWith(400)
             expect(res.json).toHaveBeenCalledWith({
                 error_code: "INVALID_DATA",
-                error_description: "Os dados fornecidos no corpo da requisição são inválidos <customer_code incorrect>."
+                error_description: "Os dados fornecidos no corpo da requisição são inválidos <confirmed_value incorrect>."
             })
         })
 
@@ -64,6 +64,10 @@ describe("ConfirmMeasureController", () => {
         await confirmMeasureController.handle(req as any, res as any)
 
         expect(confirmMeasuresService.execute).toHaveBeenCalledTimes(1)
+        expect(confirmMeasuresService.execute).toHaveBeenCalledWith({
+            measure_uuid: "12345678-1234-1234-1234-123456789012",
+            confirmed_value: 10
+        })
         expect(res.status).toHaveBeenCalledWith(200)
         expect(res.json).toHaveBeenCalledWith({ success: true })
     })

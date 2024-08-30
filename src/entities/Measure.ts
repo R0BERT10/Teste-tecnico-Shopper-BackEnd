@@ -1,21 +1,24 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn } from 'typeorm';
 import { MeasureTypes } from '../@types/EnumMeasureTypes';
 
-export interface EssencialMeasure {
+export interface MeasureDTO {
   customer_code: string
   measure_datetime: Date
   measure_type: MeasureTypes
+  measure_value: number | null
+  image_url?: string | null
+  has_confirmed: boolean
 }
 
 @Entity()
-export default class Measure implements EssencialMeasure {
+export default class Measure implements MeasureDTO {
   @PrimaryGeneratedColumn("uuid")
   id!: string;
 
   @Column({ length: 50, nullable: false })
   customer_code!: string;
 
-  @Column({ type: 'timestamptz', nullable: false })
+  @Column({ type: 'timestamp', nullable: false })
   measure_datetime!: Date;
 
   @Column({ type: 'enum', enum: ['WATER', 'GAS'], nullable: false })
@@ -29,4 +32,7 @@ export default class Measure implements EssencialMeasure {
 
   @Column({ type: 'boolean', default: false })
   has_confirmed!: boolean;
+
+  @CreateDateColumn({type: "timestamp", nullable: false})
+  created_at!: Date
 }

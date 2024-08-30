@@ -1,7 +1,7 @@
 import { FindManyOptions } from "typeorm";
 import { FindOptionsWhere } from "../../@types/FindOptionsWhere";
 import { AppDataSource } from "../../database/data-source";
-import Measure, { EssencialMeasure } from "../../entities/Measure";
+import Measure, { MeasureDTO } from "../../entities/Measure";
 import IMeasureRepository from "../IMeasureRepository";
 import { getDateMonthByDate } from "../../util/getDateMonth";
 import Result from "../../util/ResultClassHandle";
@@ -11,7 +11,7 @@ import ServerError from "../../util/ResultServerErrors";
 export default class MeasureRepositoryPostgres implements IMeasureRepository {
     private repository = AppDataSource.getRepository(Measure)
 
-    async create(measure: EssencialMeasure): Promise<Result<Measure>> {
+    async create(measure: MeasureDTO): Promise<Result<Measure>> {
         const { startDateMonth, endDateMonth } = getDateMonthByDate(measure.measure_datetime);
 
         const existsMensureMonth = await this.repository.createQueryBuilder('measure')

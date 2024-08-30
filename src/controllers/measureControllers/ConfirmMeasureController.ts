@@ -51,7 +51,7 @@ export default class ConfirmMeasureController {
         }
         if (!(confirmed_value && typeof confirmed_value == "number")) {
             return Result.fail(
-                ClientError.INVALID_DATA(invalidInputMessage + " <customer_code incorrect>.", `ConfirmMeasureController: inputHandling(${params})`)
+                ClientError.INVALID_DATA(invalidInputMessage + " <confirmed_value incorrect>.", `ConfirmMeasureController: inputHandling(${params})`)
             )
         }
 

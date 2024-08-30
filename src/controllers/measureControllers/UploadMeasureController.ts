@@ -49,13 +49,17 @@ export default class UploadMeasureController {
     private inputHandling(params: TypesOfParamsReq): Result<InputData> {
         const { image, customer_code, measure_datetime, measure_type } = params.bodyParams
         const invalidInputMessage = "Os dados fornecidos no corpo da requisição são inválidos"
-        if (image) { throw Error("TODO") }
+        if (!(image && typeof image == "string" && this.isBase64(image))) {
+            return Result.fail(
+                ClientError.INVALID_DATA(invalidInputMessage + " <image incorrect format base64 require>.", `UploadController: inputHandling(${params})`)
+            )
+        }
         if (!(customer_code && typeof customer_code == "string")) {
             return Result.fail(
                 ClientError.INVALID_DATA(invalidInputMessage + " <customer_code incorrect>.", `UploadController: inputHandling(${params})`)
             )
         }
-        if (!(measure_datetime && measure_datetime instanceof Date)) {
+        if (!(measure_datetime && typeof image == "string" && this.isValidDate(measure_datetime))) {
             console.log(measure_datetime)
             return Result.fail(
                 ClientError.INVALID_DATA(invalidInputMessage + " <measure_datetime incorrect>.", `UploadController: inputHandling(${params})`)
@@ -70,8 +74,21 @@ export default class UploadMeasureController {
         return Result.ok({
             image,
             customer_code,
-            measure_datetime,
+            measure_datetime: new Date(measure_datetime),
             measure_type
         })
+    }
+
+    private isBase64(str: string): boolean {
+        try {
+            return Buffer.from(str, 'base64').toString('base64') === str
+        } catch (err) {
+            return false;
+        }
+    }
+
+    private isValidDate(dateString: string): boolean {
+        const date = new Date(dateString);
+        return !isNaN(date.getTime());
     }
 }

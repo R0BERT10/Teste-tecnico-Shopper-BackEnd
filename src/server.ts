@@ -20,6 +20,13 @@ app.use(measureRouter)
 //    }
 //    )
 //})
+app.listen(3000, () => {
+    console.log("Server OK")
+})
+
+
+console.log(new Date())
+/*
 const fileManager = new GoogleAIFileManagerProvider()
 //fileManager.getFiles().then((v) => {
 //    console.log(v)
@@ -42,3 +49,4 @@ base64ImageExamples.forEach((image64) => {
         })
     })
 })
+    */

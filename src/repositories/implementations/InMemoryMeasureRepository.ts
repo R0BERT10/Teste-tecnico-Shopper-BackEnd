@@ -1,16 +1,20 @@
 import { FindOptionsWhere } from "../../@types/FindOptionsWhere";
-import Measure, { EssencialMeasure } from "../../entities/Measure";
+import Measure, { MeasureDTO } from "../../entities/Measure";
 import IMeasureRepository from "../IMeasureRepository";
 import Result from "../../util/ResultClassHandle";
 import ClientError from "../../util/ResultClientErrors";
+import { randomUUID } from "crypto";
 
 export default class InMemoryMeasureRepository implements IMeasureRepository {
 
     private measures: Measure[] = []
 
-    async create(measure: EssencialMeasure): Promise<Result<Measure>> {
+    async create(measure: MeasureDTO): Promise<Result<Measure>> {
         const newMeasure = new Measure()
-        newMeasure.id = 
+        newMeasure.id = randomUUID()
+        newMeasure.has_confirmed = false
+        newMeasure.image_url = measure.image_url || ""
+        newMeasure.measure_value = measure.measure_value
         newMeasure.customer_code = measure.customer_code
         newMeasure.measure_datetime = measure.measure_datetime
         newMeasure.measure_type = measure.measure_type
@@ -46,11 +50,11 @@ export default class InMemoryMeasureRepository implements IMeasureRepository {
             return Result.fail(ClientError.MEASURE_NOT_FOUND(`InMemoryMeasureRepository: update(${id})`))
         }
         measure.customer_code = update.customer_code ?? measure.customer_code
-        measure.has_confirmed = update.has_confirmed ?? measure.has_confirmed
-        measure.image_url = update.image_url ?? measure.image_url
         measure.measure_datetime = update.measure_datetime ?? measure.measure_datetime
         measure.measure_type = update.measure_type ?? measure.measure_type
         measure.measure_value = update.measure_value ?? measure.measure_value
+        measure.image_url = update.image_url ?? measure.image_url
+        measure.has_confirmed = update.has_confirmed ?? measure.has_confirmed
 
         return Result.ok(measure)
     }

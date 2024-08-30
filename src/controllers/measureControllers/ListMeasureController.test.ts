@@ -1,33 +1,8 @@
-import { MeasureTypes } from "../@types/EnumMeasureTypes";
-import ListMeasureController from "../controllers/measureControllers/ListMeasureController";
-import Measure from "../entities/Measure";
-import Result from "../util/ResultClassHandle";
-import ClientError from "../util/ResultClientErrors";
-
-
-export const factoryMeasure = (
-    measure_id: string,
-    measure_type: MeasureTypes = MeasureTypes.GAS,
-    has_confirmed: boolean = false,
-    image_url: string = "url"
-) => {
-    const measure = new Measure()
-    measure.id = measure_id
-    measure.measure_type = measure_type
-    measure.has_confirmed = has_confirmed
-    measure.image_url = image_url
-    return measure
-}
-
-const listMeasure = [
-    //factoryMeasure("12345678-1234-1234-1234-123456789012", MeasureTypes.GAS, true, "url"),
-    //factoryMeasure("12345678-1234-1234-1234-123456789013", MeasureTypes.WATER, false, "google.com"),
-    //factoryMeasure("12345678-1234-1234-1234-123456789014", MeasureTypes.GAS, false, "facebook.com"),
-    //factoryMeasure("12345678-1234-1234-1234-123456789015", MeasureTypes.WATER, true, "youtube.com"),
-    factoryMeasure("12345678-1234-1234-1234-123456789016", MeasureTypes.GAS, false, "instagram.com"),
-]
-
-
+import { MeasureTypes } from "../../@types/EnumMeasureTypes"
+import ListMeasureController from "./ListMeasureController"
+import Result from "../../util/ResultClassHandle"
+import ClientError from "../../util/ResultClientErrors"
+import { exampleListOneMeasure } from "../../util/utilitiesForTest";
 
 describe("listMeasureController", () => {
     const listMeasuresService = { execute: jest.fn() }
@@ -47,10 +22,14 @@ describe("listMeasureController", () => {
     };
 
     it("should return a success response", async () => {
-        listMeasuresService.execute.mockResolvedValueOnce(Result.ok(listMeasure))
+        listMeasuresService.execute.mockResolvedValueOnce(Result.ok(exampleListOneMeasure))
         await listMeasureController.handle(req as any, res as any)
 
         expect(listMeasuresService.execute).toHaveBeenCalledTimes(1)
+        expect(listMeasuresService.execute).toHaveBeenLastCalledWith({
+            customerCode: "123456789012",
+            measure_type: undefined
+        })
         expect(res.status).toHaveBeenCalledWith(200)
         expect(res.json).toHaveBeenCalledWith({
             customer_code: "123456789012",
@@ -71,10 +50,14 @@ describe("listMeasureController", () => {
             params: { customerCode: "123456789012" },
             query: { measure_type: "GAS" }
         };
-        listMeasuresService.execute.mockResolvedValueOnce(Result.ok(listMeasure))
+        listMeasuresService.execute.mockResolvedValueOnce(Result.ok(exampleListOneMeasure))
         await listMeasureController.handle(req as any, res as any)
 
         expect(listMeasuresService.execute).toHaveBeenCalledTimes(1)
+        expect(listMeasuresService.execute).toHaveBeenCalledWith({
+            customerCode: "123456789012",
+            measure_type: MeasureTypes.GAS
+        })
         expect(res.status).toHaveBeenCalledWith(200)
         expect(res.json).toHaveBeenCalledWith({
             customer_code: "123456789012",
