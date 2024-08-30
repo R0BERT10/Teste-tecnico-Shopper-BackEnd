@@ -44,9 +44,9 @@ export default class ConfirmMeasureController {
         const { measure_uuid, confirmed_value } = params.bodyParams
 
         const invalidInputMessage = "Os dados fornecidos no corpo da requisição são inválidos"
-        if (!(measure_uuid && typeof confirmed_value == "string")) {
+        if (!(measure_uuid && typeof measure_uuid == "string")) {
             return Result.fail(
-                ClientError.INVALID_DATA(invalidInputMessage + " <measure_datetime incorrect>.", `ConfirmMeasureController: inputHandling(${params})`)
+                ClientError.INVALID_DATA(invalidInputMessage + " <measure_uuid incorrect>.", `ConfirmMeasureController: inputHandling(${params})`)
             )
         }
         if (!(confirmed_value && typeof confirmed_value == "number")) {

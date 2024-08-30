@@ -66,14 +66,7 @@ export default class ListMeasureController {
     private inputHandling(params: TypesOfParamsReq): Result<InputData> {
         const { routeParams, queryParams } = params
         const { customerCode } = routeParams
-        const { measure_type } = queryParams
-
-        const invalidInputMessage = "Os dados fornecidos no corpo da requisição são inválidos"
-        if (!(customerCode && typeof customerCode == "string")) {
-            return Result.fail(
-                ClientError.INVALID_DATA(invalidInputMessage + " <customer_code incorrect>.", `ListMeasureController: inputHandling(${params})`)
-            )
-        }
+        const measure_type = queryParams.measure_type
 
         if (!(!measure_type || Object.values(MeasureTypes).includes(measure_type.toUpperCase()))) {
             return Result.fail(

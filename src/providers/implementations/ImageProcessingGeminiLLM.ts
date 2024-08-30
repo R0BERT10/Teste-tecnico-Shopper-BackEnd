@@ -10,7 +10,9 @@ const apiKey = process.env.GEMINI_API_KEY
 if (!apiKey) { throw Error("A variável de ambiente GEMINI_API_KEY é necessitaria.") }
 
 const genAI = new GoogleGenerativeAI(apiKey);
-const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+const model = genAI.getGenerativeModel({ model: process.env.GEMINI_MODEL || "gemini-1.5-flash" });
+
+const PROMPT_DESCRIBER_IMAGE = "What is the measurement value? Return only the value. Only integers. Only m³, do not consider dm³."
 
 type ImageParams = {
     uri: string,
@@ -22,6 +24,7 @@ type ImageParams = {
 export default class ImageProcessProviderGeminiLLM implements IImageProcessingProvider {
     private imageParams?: ImageParams
     constructor(private fileManager: IFileManagerProvider) { }
+
     async uploadImage(inlineDate: string): Promise<Result<string>> {
         const tempFile = new CustomTempFile("genAi", "jpeg")
         tempFile.uploadTempImageForBase64(inlineDate)
@@ -39,9 +42,10 @@ export default class ImageProcessProviderGeminiLLM implements IImageProcessingPr
         }
         return Result.ok(result.getValue())
     }
+    
     async describeImage(): Promise<Result<string>> {
         try {
-            const response = await this.akyToGemini("Qual o valor da medição? Retorne apenas o valor.")
+            const response = await this.akyToGemini(PROMPT_DESCRIBER_IMAGE)
             return Result.ok(response)
         } catch (error) {
             return Result.fail(ServerError.IMAGE_PROCESSING(`ImageProcessProviderGeminiLLM: describeImage()$error:${error}`))
@@ -49,7 +53,6 @@ export default class ImageProcessProviderGeminiLLM implements IImageProcessingPr
     }
 
     async akyToGemini(prompt: string): Promise<string> {
-        console.log(this.imageParams)
         const result = await model.generateContent([
             {
                 fileData: {
@@ -59,7 +62,6 @@ export default class ImageProcessProviderGeminiLLM implements IImageProcessingPr
             },
             { text: prompt },
         ]);
-        console.log(result.response)
         return result.response.text()
     }
 }

@@ -17,9 +17,9 @@ export default class ClientError implements ResultError {
     static readonly INVALID_DATA = (message: string, origin: string) => { return new ClientError("INVALID_DATA", 400, message, origin) }
     static readonly INVALID_TYPE = (origin: string) => { return new ClientError("INVALID_TYPE", 400, this.enum.INVALID_TYPE, origin) }
     static readonly DOUBLE_REPORT = (origin: string) => { return new ClientError("DOUBLE_REPORT", 409, this.enum.DOUBLE_REPORT, origin) }
-    static readonly MEASURE_NOT_FOUND = (origin: string) => { return new ClientError("MEASURE_NOT_FOUND", 400, this.enum.MEASURE_NOT_FOUND, origin) }
-    static readonly MEASURES_NOT_FOUND = (origin: string) => { return new ClientError("MEASURES_NOT_FOUND", 400, this.enum.MEASURES_NOT_FOUND, origin) }
-    static readonly CONFIRMATION_DUPLICATE = (origin: string) => { return new ClientError("CONFIRMATION_DUPLICATE", 400, this.enum.CONFIRMATION_DUPLICATE, origin) }
+    static readonly MEASURE_NOT_FOUND = (origin: string) => { return new ClientError("MEASURE_NOT_FOUND", 404, this.enum.MEASURE_NOT_FOUND, origin) }
+    static readonly MEASURES_NOT_FOUND = (origin: string) => { return new ClientError("MEASURES_NOT_FOUND", 404, this.enum.MEASURES_NOT_FOUND, origin) }
+    static readonly CONFIRMATION_DUPLICATE = (origin: string) => { return new ClientError("CONFIRMATION_DUPLICATE", 409, this.enum.CONFIRMATION_DUPLICATE, origin) }
 
     static readonly generic = (message: string, origin: string) => { return new ClientError("genericError", 400, message, origin) }
     // private to disallow creating other instances of this type

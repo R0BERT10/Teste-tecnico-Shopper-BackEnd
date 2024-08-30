@@ -13,24 +13,30 @@ type FileParams = {
     uri?: string,
     displayName?: string,
     mimeType?: string,
+    name?: string
 }
 
-export default class GoogleAIFileManagerProvider implements IFileManagerProvider {
+export default class GeminiAIFileManagerProvider implements IFileManagerProvider {
     private fileMeta?: FileParams
 
     async uploadImage(filePath: string, mimeType: string): Promise<Result<string>> {
         try {
             const uploadResponse = await fileManager.uploadFile(filePath, {
-                mimeType: mimeType
+                displayName: filePath,
+                mimeType
             })
+            const file = uploadResponse.file
             this.fileMeta = {
-                uri: uploadResponse.file.uri,
-                displayName: uploadResponse.file.displayName,
-                mimeType: uploadResponse.file.mimeType
+                uri: file.uri,
+                displayName: file.displayName,
+                mimeType: file.mimeType,
+                name: file.name
             }
-            return Result.ok(uploadResponse.file.uri)
+            return Result.ok(file.uri)
         } catch (error) {
-            return Result.fail(ServerError.INTERNAL_ERROR(""))
+            return Result.fail(ServerError.IMAGE_UPLOAD(
+                `GeminiAIFileManagerProvider: uploadImage(${filePath}, ${mimeType})$error:${error}`
+            ))
         }
     }
     getUri(): string {
