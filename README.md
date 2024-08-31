@@ -13,7 +13,7 @@
 
 Execução Docker:
 ```bash
-docker compose up
+docker compose up --build -d
 ```
 
 Execução local:
@@ -95,8 +95,6 @@ Response Body:
 
 - Corrigir: Corrigir o `error_description` do erro `MEASURE_NOT_FOUND` do endpoint `/confirm`.  
 *Esse erro pode ser facilmente resolvido alterando o valor do enum `ClientErrors` no arquivo `src/util/ResultClientErrors.ts`
-
-- Corrigir: Corrigir erro na comunicação com o `GeminiAIFileManagerProvider` as vezes retorna `ReferenceError: Headers is not defined`.
 
 - Implementar: Continuar implementações de teste unitários nos `services`.
 

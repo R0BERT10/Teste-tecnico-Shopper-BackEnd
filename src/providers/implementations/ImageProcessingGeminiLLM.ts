@@ -1,5 +1,5 @@
 import "dotenv/config";
-import { GoogleGenerativeAI } from "@google/generative-ai";
+import { GenerateContentResult, GoogleGenerativeAI } from "@google/generative-ai";
 import { CustomTempFile } from "../../util/TempFiles";
 import IFileManagerProvider from "../IFileManagerProvider";
 import IImageProcessingProvider from "../IImageProcessingProvider";
@@ -15,7 +15,7 @@ const model = genAI.getGenerativeModel({ model: process.env.GEMINI_MODEL || "gem
 const PROMPT_DESCRIBER_IMAGE = "What is the measurement value? Return only the value. Only integers. Only m³, do not consider dm³."
 
 type ImageParams = {
-    uri: string,
+    uri?: string,
     tempPath: string,
     base64: string,
     mimeType: string
@@ -29,18 +29,19 @@ export default class ImageProcessProviderGeminiLLM implements IImageProcessingPr
         const tempFile = new CustomTempFile("genAi", "jpeg")
         tempFile.uploadTempImageForBase64(inlineDate)
         const tempFilePath = tempFile.getFilePath()
-
-        const result = await this.fileManager.uploadImage(tempFilePath, "image/jpeg")
-        if (result.isFailure) {
-            return Result.fail(result.getError())
+        const mimeType = "image/jpeg"
+        let uri: string | undefined
+        const result = await this.fileManager.uploadImage(tempFilePath, mimeType)
+        if (result.isSuccess) {
+            uri = this.fileManager.getUri()
         }
         this.imageParams = {
-            uri: this.fileManager.getUri(),
+            uri,
             tempPath: tempFilePath,
             base64: inlineDate,
-            mimeType: this.fileManager.getMimeType()
+            mimeType
         }
-        return Result.ok(result.getValue())
+        return Result.ok(uri)
     }
 
     async describeImage(): Promise<Result<string>> {
@@ -53,15 +54,28 @@ export default class ImageProcessProviderGeminiLLM implements IImageProcessingPr
     }
 
     async akyToGemini(prompt: string): Promise<string> {
-        const result = await model.generateContent([
-            {
-                fileData: {
-                    mimeType: this.imageParams?.mimeType!!,
-                    fileUri: this.imageParams?.uri!!
-                }
-            },
-            { text: prompt },
-        ]);
+        let result: GenerateContentResult
+        if (this.imageParams?.uri) {
+            result = await model.generateContent([
+                {
+                    fileData: {
+                        fileUri: this.imageParams?.uri!!,
+                        mimeType: this.imageParams?.mimeType!!
+                    }
+                },
+                { text: prompt },
+            ]);
+        } else {
+            result = await model.generateContent([
+                {
+                    inlineData: {
+                        data: this.imageParams?.base64!!,
+                        mimeType: this.imageParams?.mimeType!!
+                    }
+                },
+                { text: prompt }
+            ])
+        }
         return result.response.text()
     }
 }
