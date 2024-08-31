@@ -56,6 +56,6 @@ export default class GeminiAIFileManagerProvider implements IFileManagerProvider
     }
 
     async getFiles() {
-        return fileManager.listFiles()       
+        return fileManager.listFiles()
     }
 }

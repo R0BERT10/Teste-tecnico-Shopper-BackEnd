@@ -7,11 +7,12 @@ import Measure from "../entities/Measure";
 
 export const AppDataSource = new DataSource({
   type: "postgres",
-  host: process.env.POSTGRES_HOST ?? "localhost",
+  host: process.env.POSTGRES_HOST,
+  url: process.env.DATABASE_URL,
   port: 5432,
-  username: process.env.POSTGRES_USER ?? "shoppe",
-  password: process.env.POSTGRES_PASSWORD ?? "passShoppE",
-  database: process.env.POSTGRES_DATABASE ?? "dbShopee",
+  database: process.env.POSTGRES_DATABASE,
+  username: process.env.POSTGRES_USER,
+  password: process.env.POSTGRES_PASSWORD,
   synchronize: true,
   logging: false,
   entities: [Measure],

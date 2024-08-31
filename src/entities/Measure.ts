@@ -33,6 +33,6 @@ export default class Measure implements MeasureDTO {
   @Column({ type: 'boolean', default: false })
   has_confirmed!: boolean;
 
-  @CreateDateColumn({type: "timestamp", nullable: false})
+  @CreateDateColumn({ type: "timestamp", nullable: false })
   created_at!: Date
 }

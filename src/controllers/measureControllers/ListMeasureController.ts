@@ -74,9 +74,8 @@ export default class ListMeasureController {
                     ClientError.INVALID_TYPE(`ListMeasureController: inputHandling(${params})`)
                 )
             }
-            measure_type = MeasureTypes[measureTypeString as keyof typeof MeasureTypes]
+            measure_type = measureTypeString.toUpperCase()
         }
-
         return Result.ok({
             customerCode,
             measure_type

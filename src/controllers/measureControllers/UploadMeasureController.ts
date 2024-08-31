@@ -60,12 +60,11 @@ export default class UploadMeasureController {
             )
         }
         if (!(measure_datetime && typeof image == "string" && this.isValidDate(measure_datetime))) {
-            console.log(measure_datetime)
             return Result.fail(
                 ClientError.INVALID_DATA(invalidInputMessage + " <measure_datetime incorrect>.", `UploadController: inputHandling(${params})`)
             )
         }
-        if (!(measure_type && Object.values(MeasureTypes).includes(measure_type))) {
+        if (!(measure_type && Object.values(MeasureTypes).includes(measure_type.toUpperCase()))) {
             return Result.fail(
                 ClientError.INVALID_DATA(invalidInputMessage + " <measure_type incorrect>.", `UploadController: inputHandling(${params})`)
             )
@@ -75,7 +74,7 @@ export default class UploadMeasureController {
             image,
             customer_code,
             measure_datetime: new Date(measure_datetime),
-            measure_type
+            measure_type: measure_type.toUpperCase()
         })
     }
 

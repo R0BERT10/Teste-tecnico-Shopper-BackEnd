@@ -10,31 +10,31 @@ describe('ListMeasuresService', () => {
     let repository: IMeasureRepository
     let service: ListMeasuresService
     let initialDataOnRepository: Measure[]
-    beforeEach(async () =>  {
+    beforeEach(async () => {
         jest.clearAllMocks()
         repository = new InMemoryMeasureRepository()
         initialDataOnRepository = await inicialDataMeasureRepository(repository)
         service = new ListMeasuresService(repository)
     })
 
-    it("should return result with true value", async () =>  {
+    it("should return result with true value", async () => {
         const data: { customerCode: string, measure_type?: MeasureTypes } = {
             customerCode: "",
             measure_type: undefined
         }
-        
+
         const result = await service.execute(data)
 
         expect(result.isSuccess).toBe(true)
         expect(result.getValue()).toStrictEqual(initialDataOnRepository)
     })
-    
-    it("must return result with true value filtered by measure_type", async () =>  {
+
+    it("must return result with true value filtered by measure_type", async () => {
         const data: { customerCode: string, measure_type?: MeasureTypes } = {
             customerCode: "",
             measure_type: MeasureTypes.GAS
         }
-        
+
         const result = await service.execute(data)
 
         expect(result.isSuccess).toBe(true)
@@ -43,7 +43,7 @@ describe('ListMeasuresService', () => {
         )
     })
 
-    it("should return MEASURES_NOT_FOUND error if not found", async () =>  {
+    it("should return MEASURES_NOT_FOUND error if not found", async () => {
         const data: { customerCode: string, measure_type?: MeasureTypes } = {
             customerCode: "any value",
             measure_type: MeasureTypes.GAS

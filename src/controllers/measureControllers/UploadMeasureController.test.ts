@@ -19,9 +19,9 @@ describe("UploadMeasureController", () => {
 
         it("should return image incorrect", async () => {
             const req = {
-                body: { 
+                body: {
                     image: "", // Incorrect image base 64 require
-                    customer_code : "10", 
+                    customer_code: "10",
                     measure_datetime: new Date(),
                     measure_type: "GAS"
                 }
@@ -39,9 +39,9 @@ describe("UploadMeasureController", () => {
 
         it("should return customer_code incorrect", async () => {
             const req = {
-                body: { 
+                body: {
                     image: image64Example,
-                    customer_code : 10, // Incorrect string require
+                    customer_code: 10, // Incorrect string require
                     measure_datetime: new Date(),
                     measure_type: "GAS"
                 }
@@ -59,9 +59,9 @@ describe("UploadMeasureController", () => {
 
         it("should return measure_datetime incorrect", async () => {
             const req = {
-                body: { 
+                body: {
                     image: image64Example,
-                    customer_code : "10", 
+                    customer_code: "10",
                     measure_datetime: "Date()", // Incorrect string datetime require
                     measure_type: "GAS"
                 }
@@ -79,9 +79,9 @@ describe("UploadMeasureController", () => {
 
         it("should return measure_type incorrect", async () => {
             const req = {
-                body: { 
+                body: {
                     image: image64Example,
-                    customer_code : "10", 
+                    customer_code: "10",
                     measure_datetime: new Date(),
                     measure_type: "teste" // Incorrect
                 }
@@ -99,9 +99,9 @@ describe("UploadMeasureController", () => {
 
 
     const req = {
-        body: { 
+        body: {
             image: image64Example,
-            customer_code : "10", 
+            customer_code: "10",
             measure_datetime: "2024-08-30T14:59:58.636Z",
             measure_type: "GAS"
         }

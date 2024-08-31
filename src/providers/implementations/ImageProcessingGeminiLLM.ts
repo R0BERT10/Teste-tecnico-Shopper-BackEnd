@@ -42,7 +42,7 @@ export default class ImageProcessProviderGeminiLLM implements IImageProcessingPr
         }
         return Result.ok(result.getValue())
     }
-    
+
     async describeImage(): Promise<Result<string>> {
         try {
             const response = await this.akyToGemini(PROMPT_DESCRIBER_IMAGE)

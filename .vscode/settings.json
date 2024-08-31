@@ -1,6 +1,9 @@
 {
     "cSpell.language": "en,pt,pt-BR,lorem",
     "cSpell.words": [
-        "datetime"
+        "datetime",
+        "iprementaoes",
+        "postgres",
+        "typeorm"
     ]
 }

@@ -10,11 +10,7 @@ function convertImageToBase64(imagePath: string) {
 }
 
 const base64ImageExamples = [
-    convertImageToBase64('assestsTest/OIP (2).jpeg'),
-    convertImageToBase64('assestsTest/OIP (3).jpeg'),
-    convertImageToBase64('assestsTest/OIP (4).jpeg'),
-    convertImageToBase64('assestsTest/OIP (5).jpeg'),
-    convertImageToBase64('assestsTest/OIP.jpeg')
+    convertImageToBase64('OIP.jpeg')
 ]
 
 export default base64ImageExamples
